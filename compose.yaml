@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    command: npm run dev
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      HEALTHCHECK_URL: ${HEALTHCHECK_URL:-http://127.0.0.1:3000/health}
+      MONGODB_URI: ${MONGODB_URI:-mongodb://mongo:27017}
+      PORT: ${PORT:-3000}
+    ports:
+      - "${PORT:-3000}:${PORT:-3000}"
+    volumes:
+      - .:/workspace:cached
+      - node_modules:/workspace/node_modules
+    working_dir: /workspace
+
+  mongo:
+    image: mongo:4.4
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  mongo_data:
+  node_modules:

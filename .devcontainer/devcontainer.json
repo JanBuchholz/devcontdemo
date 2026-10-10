@@ -1,0 +1,21 @@
+{
+  "name": "Express and MongoDB",
+  "dockerComposeFile": "../compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Express health service",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteUser": "node",
+  "postCreateCommand": "npm ci",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-azuretools.vscode-docker"]
+    }
+  }
+}
