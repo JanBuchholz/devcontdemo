@@ -2,6 +2,8 @@
   "name": "Express and MongoDB",
   "dockerComposeFile": "../compose.yaml",
   "service": "app",
+  "runServices": ["app", "mongo"],
+  "overrideCommand": false,
   "workspaceFolder": "/workspace",
   "shutdownAction": "stopCompose",
   "forwardPorts": [3000],

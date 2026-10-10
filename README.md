@@ -32,5 +32,11 @@ in a Compose `.env` file) to override the defaults.
 
 ## GitHub Codespaces
 
-Open the repository in a Codespace. The devcontainer starts the app and MongoDB
-using the same Compose setup, installs npm dependencies, and forwards port 3000.
+Open the repository in a Codespace and run **Codespaces: Rebuild Container** (or
+create a new Codespace after changing the devcontainer files). The devcontainer
+explicitly starts both the `app` and `mongo` Compose services, waits for MongoDB
+to pass its health check before starting the app, installs npm dependencies,
+and forwards port 3000.
+
+In the Codespace terminal, `docker compose ps` should show both services as
+running; `docker compose logs mongo` shows MongoDB startup output.
